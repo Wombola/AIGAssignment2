@@ -1,9 +1,9 @@
 function f(c,tDo,m)
        tDr = Array{Float64}(undef, 0, 2)
        tDr = tDo
-       sumA = sum(tDr, 1)
-       rw=sumA[1]
-       rv=sumA[2]
+
+       rw=sum(tDr[1:c])
+       rv=sum(tDr[1+c:c+c])
        ob=rw-m
        bv=0
        bw=0
@@ -13,9 +13,9 @@ function f(c,tDo,m)
        elseif ob>0
         for i in 1:c
          tDp=tDr[setdiff(1:end, i), :]
-         sumtDp=sum(tDp,1)
-         tDprw=sumtDp[1]
-         tDprv=sumtDp[2]
+         x=(length(tDp)/2)
+         tDprw=sum(tDp[1:x])
+         tDprv=sum(tDp[1+x:x+x])
          if tDprw<(m+1)
           if tDprv>bv
            if bw==0
@@ -58,11 +58,11 @@ function f(c,tDo,m)
          elseif tDprw>m
           a=i+1
           while tDprw>m
-           for k in 1:length(tDp)
+           for k in 1:(length(tDp)/2)
             tDp=deleteat!(tDr, i:a)
-            sumtDp=sum(tDp,1)
-            tDprw=sumtDp[1]
-            tDprv=sumtDp[2]
+            x=(length(tDp)/2)
+            tDprw=sum(tDp[1:x])
+            tDprv=sum(tDp[1+x:x+x])
             if tDprw<(m+1)
              if tDprv>bv
               if bw==0
