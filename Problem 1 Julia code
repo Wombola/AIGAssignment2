@@ -1,0 +1,117 @@
+function f(c,tDo,m)
+       tDr = Array{Float64}(undef, 0, 2)
+       tDr = tDo
+       sumA = sum(tDr, 1)
+       rw=sumA[1]
+       rv=sumA[2]
+       ob=rw-m
+       bv=0
+       bw=0
+       bTd=Array{float64}(undef, 0, 0)
+       if ob<1
+        return tDr
+       elseif ob>0
+        for i in 1:c
+         tDp=tDr[setdiff(1:end, i), :]
+         sumtDp=sum(tDp,1)
+         tDprw=sumtDp[1]
+         tDprv=sumtDp[2]
+         if tDprw<(m+1)
+          if tDprv>bv
+           if bw==0
+            bv=tDprv
+            bTd=tDp
+            bw=tDprw
+            print("Possible candidate being evaluated. \nWith a weight of:")
+            print(bw)
+            print("\nAnd a value of:")
+            print(bv)
+            print("Candidate: \n")
+            display(tDp)
+           elseif bw>(tDprw-1)
+            bv=tDprv
+            bTd=tDp
+            bw=tDprw
+            print("Possible candidate being evaluated. \nWith aweight of: ")
+            print(bw)
+            print("\nAnd a value of:")
+            print(bv)
+            print("Candidate: \n")
+            display(tDp)
+           end
+          elseif tDprv==bv
+           if bw>tDprw
+            bv=tDprv
+            bTd=tDp
+            bw=tDprw
+            print("Possible candidate being evaluated. \nWith aweight of: ")
+            print(bw)
+            print("\nAnd a value of:")
+            print(bv)
+            print("Candidate: \n")
+            display(tDp)
+           elseif bw==tDprw
+            print("A candidate that is as good as the last best candidate is: \n")
+            display(tDp)
+           end
+          end
+         elseif tDprw>m
+          a=i+1
+          while tDprw>m
+           for k in 1:length(tDp)
+            tDp=deleteat!(tDr, i:a)
+            sumtDp=sum(tDp,1)
+            tDprw=sumtDp[1]
+            tDprv=sumtDp[2]
+            if tDprw<(m+1)
+             if tDprv>bv
+              if bw==0
+               bv=tDprv
+               bTd=tDp
+               bw=tDprw
+               print("Possible candidate being evaluated. \nWith a weight of:")
+               print(bw)
+               print("\nAnd a value of:")
+               print(bv)
+               print("Candidate: \n")
+               display(tDp)
+              elseif bw>(tDprw-1)
+               bv=tDprv
+               bTd=tDp
+               bw=tDprw
+               print("Possible candidate being evaluated. \nWith a weight of:")
+               print(bw)
+               print("\nAnd a value of:")
+               print(bv)
+               print("Candidate: \n")
+               display(tDp)
+              end
+             end
+            elseif tDprv==bv
+             if bw>tDprw
+              bv=tDprv
+              bTd=tDp
+              bw=tDprw
+              print("Possible candidate being evaluated. \nWith a weight of:")
+              print(bw)
+              print("\nAnd a value of:")
+              print(bv)
+              print("Candidate: \n")
+              display(tDp)
+             elseif bw==tDprw
+              print("A candidate that is as good as the last best candidate is: \n")
+              display(tDp)
+             end
+            end
+           end
+          end
+         if tDprw>m
+          a=a+1
+         end
+        end
+       return bTd
+       end
+       else print("Maximum capacity too small to find solution")
+       return nothing
+       end
+       end
