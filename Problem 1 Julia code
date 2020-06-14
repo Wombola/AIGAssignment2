@@ -1,7 +1,13 @@
 function f(c,tDo,m)
+       function b(p,q,j)
+        z=p
+        for n=q:j
+         z=z[1:size(z,1) .!= q,: ]
+        end
+        return z
+       end
        tDr = Array{Float64}(undef, 0, 2)
        tDr = tDo
-
        rw=sum(tDr[1:c])
        rv=sum(tDr[1+c:c+c])
        ob=rw-m
@@ -11,7 +17,8 @@ function f(c,tDo,m)
        if ob<1
         return tDr
        elseif ob>0
-        for i in 1:c
+        for i = 1:c
+	 a=i+1
          tDp=tDr[setdiff(1:end, i), :]
          x=(length(tDp)/2)
          tDprw=sum(tDp[1:x])
@@ -58,8 +65,9 @@ function f(c,tDo,m)
          elseif tDprw>m
           a=i+1
           while tDprw>m
-           for k in 1:(length(tDp)/2)
-            tDp=deleteat!(tDr, i:a)
+           for k = 1:(length(tDp)/2)
+            tDp=tDr
+	    tDp=b(tDp,i,a)
             x=(length(tDp)/2)
             tDprw=sum(tDp[1:x])
             tDprv=sum(tDp[1+x:x+x])
@@ -104,14 +112,14 @@ function f(c,tDo,m)
              end
             end
            end
+            if tDprw>m
+             a=a+1
+            end
           end
-         if tDprw>m
-          a=a+1
          end
+         return bTd
         end
-       return bTd
-       end
        else print("Maximum capacity too small to find solution")
-       return nothing
+        return nothing
        end
-       end
+end
