@@ -1,0 +1,113 @@
+function f(c,tDo,m)
+           function nBit(n)
+               function toBit(n)
+                           j=bitstring(UInt(n))
+                           j=parse(Int,j)
+                           return j
+               end
+               c=2^n
+               x=c-1
+               arr=Array{Union{Missing, Int}}(missing,n,c)
+               for i=1:(n*c)
+                           arr[i]=0
+               end
+               z=0
+               p=digits(toBit(z))
+               k=1
+               while k<((n*c)+1)
+                   b=k+n
+                   if size(p,1)<n
+                       g=k
+                       for i=1:size(p,1)
+               	                arr[g]=p[i]
+                                g=g+1
+                       end
+                       z=z+1
+                       p=digits(toBit(z))
+                       k=b
+                   elseif size(p,1)==n
+                       g=k
+                       for i=1:size(p,1)
+                           arr[g]=p[i]
+                           g=g+1
+                       end
+                       z=z+1
+                       p=digits(toBit(z))
+                       k=b
+                   end
+               end
+                       return arr
+           end
+           function pArr(arr,z)
+                   parr=[]
+                   for i=1:size(z,1)
+                             if z[i]==1
+                             push!(parr,arr[i])
+                   end
+               end
+               return parr
+           end
+           tDr = tDo
+           s=sum(tDr)
+           rw=s[1]
+           rv=s[2]
+           ob=rw-m
+           bv=0
+           bw=0
+           bTd=[]
+           if ob<1
+               return tDr
+           else
+               possArr=nBit(c)
+               x=2^c
+               for i=1:x
+                   z=possArr[1+(c*(i-1)):(i*c)]
+                   tDp=pArr(tDo,z)
+                   s=sum(tDp)
+                   tDprw=s[1]
+                   tDprv=s[2]
+                   if tDprw<(m+1)
+                       if tDprv>bv
+                              if bw==0
+                                     bv=tDprv
+                                     bTd=tDp
+                                     bw=tDprw
+                                     print("Possible candidate being evaluated. \nWith a weight of:")
+                                     print(bw)
+                                     print("\nAnd a value of:")
+                                     print(bv)
+                                     print("\nCandidate: \n")
+                                     display(tDp)
+                              elseif bw>(tDprw-1)
+                                     bv=tDprv
+                                     bTd=tDp
+                                     bw=tDprw
+                                     print("Possible candidate being evaluated. \nWith aweight of: ")
+                                     print(bw)
+                                     print("\nAnd a value of:")
+                                     print(bv)
+                                     print("\nCandidate: \n")
+                                     display(tDp)
+                              end
+                       elseif tDprv==bv
+                              if bw>tDprw
+                                     bv=tDprv
+                                     bTd=tDp
+                                     bw=tDprw
+                                     print("Possible candidate being evaluated. \nWith a weight of:")
+                                     print(bw)
+                                     print("\nAnd a value of:")
+                                     print(bv)
+                                     print("\nCandidate: \n")
+                                     display(tDp)
+                              elseif bw==tDprw
+                                     print("A candidate that is as good as the last best candidate is: \n")
+                                     display(tDp)
+                              end
+                       end
+                   end
+               end
+	       return bTd
+           end
+           return bTd
+end
